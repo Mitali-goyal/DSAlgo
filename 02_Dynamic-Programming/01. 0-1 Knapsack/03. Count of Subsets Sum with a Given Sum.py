@@ -1,6 +1,9 @@
 # https://www.youtube.com/watch?v=F7wqWbqYn9g&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=11
 # https://practice.geeksforgeeks.org/problems/perfect-sum-problem5633/1#
 # https://leetcode.com/problems/
+# approach: this ques is similar to subset sum, in subset sum we store "or" of true and false
+# but now we will store 0 or 1 and add them so earlier true || False
+# but now 0 + 1 or whatever the side are evaluating
 
 class Solution:
 	def perfectSum(self, arr, n, sum):
