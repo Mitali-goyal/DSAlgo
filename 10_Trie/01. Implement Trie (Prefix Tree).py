@@ -1,48 +1,54 @@
-# BASICS of TRIES: https://youtu.be/AXjmTQ8LEoI
-
-# https://leetcode.com/problems/implement-trie-prefix-tree/
-# https://youtu.be/oobqoCJlHA0
-
 class TrieNode:
-    # creating constructor for TrieNode and assigning attributes to TrieNode
     def __init__(self):
-        self.children = {}       # storing children in hashset instead of list to have search in constant time
-        self.endOfWord = False   # by default saying that current node is not the end of word 
+        # Initialize a TrieNode with 26 possible children (for each letter of the alphabet)
+        self.children = [None] * 26
+        # 'end' flag indicates whether a word ends at this node
+        self.end = False
 
-        
+
 class Trie:
-    
     def __init__(self):
-        self.root = TrieNode()                 # the root of trie with null value
-        
+        """
+        Initialize your data structure here.
+        """
+        # Initialize the Trie with a root node
+        self.root = TrieNode()
+
     def insert(self, word: str) -> None:
-        cur = self.root                        # starting cur pointer from the main root
-        for c in word:                         # search for each letter of word
-            if c not in cur.children:          # current letter 'c' not in children hashmap
-                cur.children[c] = TrieNode()   # then create new trie node with key 'c' and value Null 
-            cur = cur.children[c]              # shift the cur pointer to the 'c' child
-        cur.endOfWord = True                   # mark the current not as end of the word
+        """
+        Inserts a word into the trie.
+        """
+        curr = self.root  # Start from the root of the Trie
+        for c in word:
+            i = ord(c) - ord("a")  # Convert the character to an index (0-25)
+            if curr.children[i] == None:
+                # If the child node doesn't exist, create it
+                curr.children[i] = TrieNode()
+            curr = curr.children[i]  # Move to the child node
+        curr.end = True  # Mark the end of the inserted word
 
     def search(self, word: str) -> bool:
-        cur = self.root
+        """
+        Returns if the word is in the trie.
+        """
+        curr = self.root  # Start from the root of the Trie
         for c in word:
-            if c not in cur.children:          # there if no children in hashmap with key 'c'
-                return False                   # the word not present in trie
-            cur = cur.children[c]              # shift the cur pointer to the 'c' child
-        return cur.endOfWord                   # check if actual word ends here or may be the actual word is longer than given word
+            i = ord(c) - ord("a")  # Convert the character to an index (0-25)
+            if curr.children[i] == None:
+                # If the child node doesn't exist, the word is not in the Trie
+                return False
+            curr = curr.children[i]  # Move to the child node
+        return curr.end  # Check if the last node marks the end of a word
 
     def startsWith(self, prefix: str) -> bool:
-        cur = self.root
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        """
+        curr = self.root  # Start from the root of the Trie
         for c in prefix:
-            if c not in cur.children:
+            i = ord(c) - ord("a")  # Convert the character to an index (0-25)
+            if curr.children[i] == None:
+                # If the child node doesn't exist, no word starts with this prefix
                 return False
-            cur = cur.children[c]
-        return True                            # all the letters of prefix has been checked so prefix is present
-        
-
-
-# Your Trie object will be instantiated and called as such:
-# obj = Trie()
-# obj.insert(word)
-# param_2 = obj.search(word)
-# param_3 = obj.startsWith(prefix)
+            curr = curr.children[i]  # Move to the child node
+        return True  # The prefix exists in the Trie, and there might be words that start with it
