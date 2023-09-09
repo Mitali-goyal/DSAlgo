@@ -1,6 +1,7 @@
 # https://www.youtube.com/watch?v=UmMh7xp07kY&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=9
 # https://leetcode.com/problems/partition-equal-subset-sum/
-
+#approach: first we will find the sum of the array iseven or not so that if partition is possible.
+#   if true: now we will find the subset with the halfsum using a subsetsum approach.
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         s = sum(nums)
